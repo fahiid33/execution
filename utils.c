@@ -203,7 +203,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	str = (char *)malloc(sizeof(char) * len + 1);
 	if (str == NULL)
 		return (NULL);
-	while (s[i])
+	while (s[i] && s[i] != len)
 	{
 		if (j < len && i >= start)
 		{
@@ -212,6 +212,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		}
 		i++;
 	}
+	str[j++] = len;
 	str[j] = '\0';
 	return (str);
 }

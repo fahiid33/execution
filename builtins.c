@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/05/28 01:07:52 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/05/28 02:25:40 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ char **add_export(t_parse *head, char ***env, char ***export)
 {
 	if (head->argv && ft_int_strchr(head->argv[0], '=') != -1)
 	{
-		*env = add_string_to_2darray(*env, head->argv[0]);
-		*export = add_string_to_2darray(*export, ft_strjoin("declare -x ",head->argv[0]));
+		*env = add_string_to_2darray(*env, head->argv[0], 0);
+		*export = add_string_to_2darray(*export, head->argv[0], 1);
 	}
 	else if (head->argv && ft_int_strchr(head->argv[0], '=') == -1)
 	{
-		*export = add_string_to_2darray(*export, ft_strjoin("declare -x ", ft_strjoin(head->argv[0], "=''")));
+		*export = add_string_to_2darray(*export, ft_strjoin("declare -x ", head->argv[0]), 0);
 	}
 	else
 		printf_env(*export);
@@ -163,6 +163,7 @@ void	del_2d_array(char *arg, char **my_export, char **env)
 {
 	int	i;
 	int	j;
+	
 
 	i = 0;
 	j = 0;
@@ -176,8 +177,8 @@ void	del_2d_array(char *arg, char **my_export, char **env)
 			env[i] = NULL;
 		i++;
 	}
-	while (my_export[j] && strncmp(arg, my_export[j], strlen(arg)))
-		j++;
+	while (my_export[j] && strncmp(arg, ft_substr(my_export[j],ft_int_strchr(my_export[j],' ') + 4,ft_int_strchr(my_export[j],'=')),strlen(arg)))
+		j++;	
 	while (my_export[j])
 	{
 		if (my_export[j + 1])

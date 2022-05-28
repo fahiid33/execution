@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/28 00:44:46 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/05/28 02:15:11 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	cd(t_parse *commands);
 char	**add_export(t_parse *head, char ***env, char ***export);
 void    pwd(t_parse *commands);
 void    unset(t_parse *head, char ***my_export,char ***env);
-char  **add_string_to_2darray(char **env, char *to_add);
+char  **add_string_to_2darray(char **env, char *to_add, int a);
 void    echo(t_parse *commands);
 int     array_size(char **str);
 void	my_exit(t_parse *cmd);

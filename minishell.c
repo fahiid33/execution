@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/28 00:45:37 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/05/28 02:31:03 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-char  **add_string_to_2darray(char **env, char *to_add) //var=15  var=12 || var=
+char  **add_string_to_2darray(char **env, char *to_add,int a) //var=15  var=12 || var=
 {
    char   **str;
    char  *tmp;
@@ -37,7 +37,18 @@ char  **add_string_to_2darray(char **env, char *to_add) //var=15  var=12 || var=
       j++;
 	}
    if (flag)
-	   str[j] = strdup(to_add);
+   {
+      if (a == 1)
+	   {
+	   	   str[j] = ft_strdup("declare -x ");
+	      	str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
+	      	str[j] = ft_strjoin(str[j],"\"");
+	      	str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
+	      	str[j] = ft_strjoin(str[j],"\"");
+	   }
+	   else
+         	str[j] = strdup(to_add);
+   }
    // printf("str ==-%s\n",str[j - 1]);
    // printf("to_add ===%s\n", to_add);
 	str[++j] = NULL;
@@ -45,17 +56,18 @@ char  **add_string_to_2darray(char **env, char *to_add) //var=15  var=12 || var=
 	return (str);
    
 }
-char **get_string(void)
+
+char **get_string(char **env)
 {
 	char **str;
 	int i;
 	i = 0;
-	str = malloc(sizeof(char *) * 30);
-   char *tab[30] = {"Apple_PubSub_Socket_Render=","COLORTERM=","GIT_ASKPASS=","HOME=","LANG=","LESS=","LOGNAME=","LSCOLORS=","OLDPWD","ORIGINAL_XDG_CURRENT_DESKTOP=","PAGER=","PATH=","PWD=","SHELL=","SHLVL=","SSH_AUTH_SOCK=","TERM=","TERM_PROGRAM=","TERM_PROGRAM_VERSION=","TMPDIR=","USER=","VSCODE_GIT_ASKPASS_EXTRA_ARGS=","VSCODE_GIT_ASKPASS_MAIN=","VSCODE_GIT_ASKPASS_NODE=","VSCODE_GIT_IPC_HANDLE=","XPC_FLAGS=","XPC_SERVICE_NAME=","ZSH=","__CF_USER_TEXT_ENCODING=",NULL};
-   
-	while(tab[i])
+   while(env[i++])
+	str = malloc(sizeof(char *) * i + 1);
+   i = 0;
+	while(env[i])
 	{
-		str[i] = ft_strdup(tab[i]);
+		str[i] = ft_strdup(ft_substr(env[i] , 0, '='));
 		i++;
 	}
 	str[i++] = NULL;
@@ -71,7 +83,7 @@ char** init_export(char **env)
 	char **res;
 	j = 0;
 	s1 = ft_strdup("");
-	strings = get_string();
+	strings = get_string(env);
 	i = 0;
    
    while(strings[i])
