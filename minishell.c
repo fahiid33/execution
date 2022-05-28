@@ -6,7 +6,7 @@
 /*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/28 02:31:03 by aainhaja         ###   ########.fr       */
+/*   Updated: 2022/05/28 23:49:06 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,18 @@ char  **add_string_to_2darray(char **env, char *to_add,int a) //var=15  var=12 |
    size = strlen(tmp);
 	while (env[i])
 	{
-      if (strncmp(env[i], tmp, size))
+      if(a == 1 && strncmp(tmp, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), size - 1) == 0)
+      {
+            str[j] = ft_strdup("declare -x ");
+	      	str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
+	      	str[j] = ft_strjoin(str[j],"\"");
+	      	str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
+	      	str[j] = ft_strjoin(str[j],"\"");
+            flag = 0;
+      }
+      else if(a == 2 && strncmp(to_add, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), strlen(to_add)) == 0)
+         return(env);
+      else if (strncmp(env[i], tmp, size))
 		   str[j] = strdup(env[i]);
       else
       {
@@ -38,7 +49,12 @@ char  **add_string_to_2darray(char **env, char *to_add,int a) //var=15  var=12 |
 	}
    if (flag)
    {
-      if (a == 1)
+      if(a == 2)
+      {
+            str[j] = ft_strdup("declare -x ");
+	      	str[j] = ft_strjoin(str[j], to_add);
+      }
+      else if (a == 1)
 	   {
 	   	   str[j] = ft_strdup("declare -x ");
 	      	str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));

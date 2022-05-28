@@ -6,7 +6,7 @@
 /*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/05/28 02:25:40 by aainhaja         ###   ########.fr       */
+/*   Updated: 2022/05/28 23:24:08 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char **add_export(t_parse *head, char ***env, char ***export)
 	}
 	else if (head->argv && ft_int_strchr(head->argv[0], '=') == -1)
 	{
-		*export = add_string_to_2darray(*export, ft_strjoin("declare -x ", head->argv[0]), 0);
+		*export = add_string_to_2darray(*export, head->argv[0], 2);
 	}
 	else
 		printf_env(*export);
