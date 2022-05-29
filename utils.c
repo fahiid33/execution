@@ -66,7 +66,7 @@ char	*ft_strjoin(char *s1, char *s2 ,int c)
 	str = NULL;
 	i = 0;
 	j = 0;
-	str = strdup("");
+	str = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
 	str = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (str == 0)
 		return (0);
