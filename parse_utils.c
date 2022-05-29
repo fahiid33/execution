@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 02:11:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/22 02:44:33 by fahd             ###   ########.fr       */
+/*   Updated: 2022/05/29 16:18:50 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,12 @@ char *jme3arg(t_token **b)
             (*b) = (*b)->next;
             (*b)->val = getenv((*b)->val);
         }
-        str = ft_strjoin(str, (*b)->val);
+        str = ft_strjoin(str, (*b)->val, 0);
 		(*b) = (*b)->next;
 	}
     if((*b)  && (*b)->type != END)
     {
-        str = ft_strjoin(str, (*b)->val);
+        str = ft_strjoin(str, (*b)->val, 0);
         (*b) = (*b)->next;
     }
     return str;

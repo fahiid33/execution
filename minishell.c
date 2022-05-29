@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/29 02:23:36 by fahd             ###   ########.fr       */
+/*   Updated: 2022/05/29 16:20:13 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ char  **crazy_add_string_to_2darray(char **env, char *to_add,int a) //var=15  va
 				&& strncmp(tmp, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), size - 1) == 0)
 		{
 			str[j] = ft_strdup("declare -x ");
-			str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
-			str[j] = ft_strjoin(str[j],"\"");
-			str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
-			str[j] = ft_strjoin(str[j],"\"");
+			str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='), 3);
+			str[j] = ft_strjoin(str[j],"\"", 1);
+			str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1, 1);
+			str[j] = ft_strjoin(str[j],"\"", 1);
 			flag = 0;
 		}
 		else if(a == 0 
@@ -61,15 +61,15 @@ char  **crazy_add_string_to_2darray(char **env, char *to_add,int a) //var=15  va
 		if(a == 2)
 		{
 			str[j] = ft_strdup("declare -x ");
-			str[j] = ft_strjoin(str[j], to_add);
+			str[j] = ft_strjoin(str[j], to_add, 1);
 		}
 		else if (a == 1)
 		{
 			str[j] = ft_strdup("declare -x ");
-			str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
-			str[j] = ft_strjoin(str[j],"\"");
-			str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
-			str[j] = ft_strjoin(str[j],"\"");
+			str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='), 1);
+			str[j] = ft_strjoin(str[j],"\"", 1);
+			str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1, 1);
+			str[j] = ft_strjoin(str[j],"\"", 1);
 		}
 		else
 			str[j] = strdup(to_add);
@@ -116,17 +116,17 @@ char** init_export(char **env)
       {
          j++;
       }
-      s1 = ft_strjoin(s1,"declare -x ");
-      s1 = ft_strjoin(s1,strings[i]);
+      s1 = ft_strjoin(s1,"declare -x ", 1);
+      s1 = ft_strjoin(s1,strings[i], 1);
       
       if(strcmp(strings[i] , "OLDPWD"))
       {
-         s1 = ft_strjoin(s1,"\"");
-         s1 = ft_strjoin(s1,strchr(env[j],'=')+ 1);
-         s1 = ft_strjoin(s1,"\"\n");
+         s1 = ft_strjoin(s1,"\"", 1);
+         s1 = ft_strjoin(s1,strchr(env[j],'=')+ 1, 1);
+         s1 = ft_strjoin(s1,"\"\n", 1);
       }
       else
-         s1 = ft_strjoin(s1,"\n");
+         s1 = ft_strjoin(s1,"\n", 1);
       j = 0;
       i++;
 

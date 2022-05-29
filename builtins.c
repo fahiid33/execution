@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/05/29 02:34:42 by fahd             ###   ########.fr       */
+/*   Updated: 2022/05/29 16:18:05 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void cd(t_parse *head, char ***env, char ***my_export)
 		chdir(getenv("HOME"));
 	else if (head->argv && head->argv[0] && !head->argv[1])
 	{
-		*env = crazy_add_string_to_2darray(*env, ft_strjoin("OLDPWD=",pwd(head, 0)), 0);
-		*my_export = crazy_add_string_to_2darray(*my_export, ft_strjoin("OLDPWD=",pwd(head, 0)), 1);
+		*env = crazy_add_string_to_2darray(*env, ft_strjoin("OLDPWD=",pwd(head, 0), 0), 0);
+		*my_export = crazy_add_string_to_2darray(*my_export, ft_strjoin("OLDPWD=",pwd(head, 0), 0), 1);
 		// c = 1;
 		if (chdir(head->argv[0]) == -1)
 			printf("cd: no such file or directory: %s \n", head->argv[0]);
 		else
 		{
-			*env = crazy_add_string_to_2darray(*env, ft_strjoin("PWD=",pwd(head, 0)), 0);
-			*my_export = crazy_add_string_to_2darray(*my_export, ft_strjoin("PWD=",pwd(head, 0)), 1);
+			*env = crazy_add_string_to_2darray(*env, ft_strjoin("PWD=",pwd(head, 0), 0), 0);
+			*my_export = crazy_add_string_to_2darray(*my_export, ft_strjoin("PWD=",pwd(head, 0), 0), 1);
 			// c = 1;
 		}
 	}
@@ -66,12 +66,13 @@ char *pwd(t_parse *head, int k)
 	{
 		dir = getcwd(buf, size);
 		printf("%s\n", dir);
-	
 	}
 	else
 	{
 		if (k)
+		{
 			printf("pwd: too many arguments\n");
+		}
 		dir = getcwd(buf, size);
 	}
 	return(dir);

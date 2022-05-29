@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/29 02:08:48 by fahd             ###   ########.fr       */
+/*   Updated: 2022/05/29 16:11:44 by aainhaja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define PATH_MAX 4096
+# define PATH_MAX 1024
 
 typedef struct s_lexer
 {
@@ -105,7 +105,7 @@ int     ft_isdigit(int c);
 int	    ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(char *s1);
 int	    ft_strlen(char *s);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char *s1, char *s2, int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
@@ -132,5 +132,5 @@ void	echo(t_parse *cmd);
 char	**ft_split(char const *s, char c);
 void	check_numb(char *str);
 int	my_getenv(char *str, char ***my_env);
-
+char	*ft_strjoin2(char *s1, char *s2);
 #endif

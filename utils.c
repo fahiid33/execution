@@ -57,16 +57,16 @@ int	ft_strlen(char *s)
 		i++;
 	return (i);
 }
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2 ,int c)
 {
 	char	*str;
 	int		i;
 	int		j;
 
+	str = NULL;
 	i = 0;
 	j = 0;
-	if (!s1)
-		return (0);
+	str = strdup("");
 	str = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (str == 0)
 		return (0);
@@ -81,6 +81,15 @@ char	*ft_strjoin(char *s1, char *s2)
 	{
 		str[j] = s2[i];
 		j++;
+	}
+	if(c == 1)
+		free(s1);
+	if(c == 2)
+		free(s2);
+	if(c == 3)
+	{
+		free(s2);
+		free(s1);
 	}
 	str[j] = '\0';
 	return (str);
