@@ -3,74 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/28 23:49:06 by aainhaja         ###   ########.fr       */
+/*   Updated: 2022/05/29 02:23:36 by fahd             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-char  **add_string_to_2darray(char **env, char *to_add,int a) //var=15  var=12 || var=
+char  **crazy_add_string_to_2darray(char **env, char *to_add,int a) //var=15  var=12 || var=
 {
-   char   **str;
-   char  *tmp;
-   int   i = 0;
-   int	j = 0;
-   int   flag = 1;
-   int size = array_size(env);
-   tmp = ft_substr(to_add, 0, ft_int_strchr(to_add, '='));
-   str = (char **)malloc(sizeof (char *) * (size + 1));
-   size = strlen(tmp);
+	char   **str;
+	char  *tmp;
+	int   i = 0;
+	int	j = 0;
+	int   flag = 1;
+	int size = array_size(env);
+	tmp = ft_substr(to_add, 0, ft_int_strchr(to_add, '='));
+	str = (char **)malloc(sizeof (char *) * (size + 1));
+	size = strlen(tmp);
 	while (env[i])
 	{
-      if(a == 1 && strncmp(tmp, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), size - 1) == 0)
-      {
-            str[j] = ft_strdup("declare -x ");
-	      	str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
-	      	str[j] = ft_strjoin(str[j],"\"");
-	      	str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
-	      	str[j] = ft_strjoin(str[j],"\"");
-            flag = 0;
-      }
-      else if(a == 2 && strncmp(to_add, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), strlen(to_add)) == 0)
-         return(env);
-      else if (strncmp(env[i], tmp, size))
-		   str[j] = strdup(env[i]);
-      else
-      {
-         str[j] = strdup(to_add);
-         flag = 0;
-      }
-      i++;
-      j++;
+		if(a == 1 
+				&& strncmp(tmp, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), size - 1) == 0)
+		{
+			str[j] = ft_strdup("declare -x ");
+			str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
+			str[j] = ft_strjoin(str[j],"\"");
+			str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
+			str[j] = ft_strjoin(str[j],"\"");
+			flag = 0;
+		}
+		else if(a == 0 
+				&& strncmp(tmp, ft_substr(env[i],0,ft_int_strchr(env[i],'=')), size) == 0)
+		{
+			str[j] = ft_strdup(to_add);
+			// printf("%s    \n\n\n",str[j]);
+			flag = 0;
+		}
+		else if(a == 2 
+				&& strncmp(to_add, ft_substr(env[i],ft_int_strchr(env[i],' ') + 4,ft_int_strchr(env[i],'=')), strlen(to_add)) == 0)
+			return(env);
+		else if (strncmp(env[i], tmp, size))
+			str[j] = strdup(env[i]);
+		else
+		{
+			str[j] = strdup(to_add);
+			flag = 0;
+		}
+		i++;
+		j++;
 	}
-   if (flag)
-   {
-      if(a == 2)
-      {
-            str[j] = ft_strdup("declare -x ");
-	      	str[j] = ft_strjoin(str[j], to_add);
-      }
-      else if (a == 1)
-	   {
-	   	   str[j] = ft_strdup("declare -x ");
-	      	str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
-	      	str[j] = ft_strjoin(str[j],"\"");
-	      	str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
-	      	str[j] = ft_strjoin(str[j],"\"");
-	   }
-	   else
-         	str[j] = strdup(to_add);
-   }
-   // printf("str ==-%s\n",str[j - 1]);
-   // printf("to_add ===%s\n", to_add);
+	if (flag)
+	{
+		if(a == 2)
+		{
+			str[j] = ft_strdup("declare -x ");
+			str[j] = ft_strjoin(str[j], to_add);
+		}
+		else if (a == 1)
+		{
+			str[j] = ft_strdup("declare -x ");
+			str[j] = ft_strjoin(str[j],ft_substr(to_add,0,'='));
+			str[j] = ft_strjoin(str[j],"\"");
+			str[j] = ft_strjoin(str[j],strchr(to_add,'=') + 1);
+			str[j] = ft_strjoin(str[j],"\"");
+		}
+		else
+			str[j] = strdup(to_add);
+	}
+	// printf("str ==-%s\n",str[j - 1]);
+	// printf("to_add ===%s\n", to_add);
 	str[++j] = NULL;
-
 	return (str);
-   
 }
 
 char **get_string(char **env)

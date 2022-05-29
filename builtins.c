@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/05/28 23:24:08 by aainhaja         ###   ########.fr       */
+/*   Updated: 2022/05/29 02:34:42 by fahd             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,23 @@ int array_size(char **str)
 	return (i);
 }
 
-void cd(t_parse *head)
+void cd(t_parse *head, char ***env, char ***my_export)
 {
 	if (!head->argv)
 		chdir(getenv("HOME"));
 	else if (head->argv && head->argv[0] && !head->argv[1])
 	{
+		*env = crazy_add_string_to_2darray(*env, ft_strjoin("OLDPWD=",pwd(head, 0)), 0);
+		*my_export = crazy_add_string_to_2darray(*my_export, ft_strjoin("OLDPWD=",pwd(head, 0)), 1);
+		// c = 1;
 		if (chdir(head->argv[0]) == -1)
 			printf("cd: no such file or directory: %s \n", head->argv[0]);
+		else
+		{
+			*env = crazy_add_string_to_2darray(*env, ft_strjoin("PWD=",pwd(head, 0)), 0);
+			*my_export = crazy_add_string_to_2darray(*my_export, ft_strjoin("PWD=",pwd(head, 0)), 1);
+			// c = 1;
+		}
 	}
 	else
 		printf("cd: too many arguments\n");
@@ -45,7 +54,7 @@ void printf_env(char **lenv)
 	}
 }
 
-void pwd(t_parse *head)
+char *pwd(t_parse *head, int k)
 {
 	char *buf;
 	char *dir;
@@ -56,24 +65,27 @@ void pwd(t_parse *head)
 	if (!head->argv)
 	{
 		dir = getcwd(buf, size);
-		// *env = add_string_to_2darray(*env, ft_strjoin("OLDPWD=", dir)); 
 		printf("%s\n", dir);
-		
-		
+	
 	}
 	else
-		printf("pwd: too many arguments\n");
+	{
+		if (k)
+			printf("pwd: too many arguments\n");
+		dir = getcwd(buf, size);
+	}
+	return(dir);
 }
 char **add_export(t_parse *head, char ***env, char ***export)
 {
 	if (head->argv && ft_int_strchr(head->argv[0], '=') != -1)
 	{
-		*env = add_string_to_2darray(*env, head->argv[0], 0);
-		*export = add_string_to_2darray(*export, head->argv[0], 1);
+		*env = crazy_add_string_to_2darray(*env, head->argv[0], 0);
+		*export = crazy_add_string_to_2darray(*export, head->argv[0], 1);
 	}
 	else if (head->argv && ft_int_strchr(head->argv[0], '=') == -1)
 	{
-		*export = add_string_to_2darray(*export, head->argv[0], 2);
+		*export = crazy_add_string_to_2darray(*export, head->argv[0], 2);
 	}
 	else
 		printf_env(*export);
@@ -227,13 +239,13 @@ void builtins(t_parse *commands, char ***env, char ***my_export)
 	{
 		// printf("--%s--" ,head->cmd);
 		if (strcmp(head->cmd, "cd") == 0)
-			cd(head);
+			cd(head, env, my_export);
 		else if (strcmp(head->cmd, "env") == 0)
 			printf_env(*env);
 		else if (strcmp(head->cmd, "export") == 0)
 			*my_export = add_export(head, env, my_export);
 		else if (strcmp(head->cmd, "pwd") == 0)
-			pwd(head);
+			pwd(head, 1);
 		else if (strcmp(head->cmd, "exit") == 0)
 			my_exit(head);
 		else if (strcmp(head->cmd, "echo") == 0)

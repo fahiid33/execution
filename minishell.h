@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aainhaja <aainhaja@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fahd <fahd@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/05/28 02:15:11 by aainhaja         ###   ########.fr       */
+/*   Updated: 2022/05/29 02:08:48 by fahd             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define BUFFER_SIZE 4096 
-# define PATH_MAX 1024
+# define PATH_MAX 4096
 
 typedef struct s_lexer
 {
@@ -120,11 +119,11 @@ t_parse *init_command(void);
 void print_l(t_parse *lst);
 void create_commands(t_token *token, t_parse **command);
 void    builtins(t_parse *commands, char ***env, char ***my_export);
-void	cd(t_parse *commands);
+void	cd(t_parse *commands, char ***export, char ***env);
 char	**add_export(t_parse *head, char ***env, char ***export);
-void    pwd(t_parse *commands);
+char    *pwd(t_parse *commands, int k);
 void    unset(t_parse *head, char ***my_export,char ***env);
-char  **add_string_to_2darray(char **env, char *to_add, int a);
+char  **crazy_add_string_to_2darray(char **env, char *to_add, int a);
 void    echo(t_parse *commands);
 int     array_size(char **str);
 void	my_exit(t_parse *cmd);
